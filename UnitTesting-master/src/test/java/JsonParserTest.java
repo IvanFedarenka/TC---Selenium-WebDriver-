@@ -6,16 +6,18 @@ import org.junit.jupiter.api.Test;
 import parser.JsonParser;
 import shop.Cart;
 import shop.RealItem;
+
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonParserTest {
+
     private JsonParser jParser;
     private Cart fakeCart;
     private static final String CART_NAME = "testCart";
-    private static final File TEST_READING_FILE = new File("src/test/resources/" + CART_NAME + ".json");
-    private static final File TEST_WRITTEN_FILE = new File ("src/main/resources/" + CART_NAME + ".json");
+    private static final String TEST_READING_FILE = "src/test/resources/testCart.json";
+    private static final String TEST_WRITTEN_FILE = "src/main/resources/testCart.json";
     private static final double ITEM_PRICE = 12.4;
     private static final double ITEM_WEIGHT = 1.2;
     private static final String ITEM_NAME = "fake item";
@@ -35,22 +37,23 @@ public class JsonParserTest {
     @DisplayName("checking if writeToFile() method call does not throw exception and еру written file actually exists")
     public void testWriteToFile() {
         assertAll(
-                ()-> assertDoesNotThrow(() -> jParser.writeToFile(fakeCart)),
-                ()-> assertTrue(TEST_WRITTEN_FILE.exists())
+                () -> assertDoesNotThrow(() -> jParser.writeToFile(fakeCart), "failed 'testWriteToFile' with valid file"),
+                () -> assertTrue(new File(TEST_WRITTEN_FILE).exists(), "failed 'testWriteToFile', written file not found")
         );
     }
 
     @Test
     @DisplayName("checking if readFromFile() method is able to read data correctly")
     public void testReadValidFile() {
-        Cart tempCart = jParser.readFromFile(TEST_READING_FILE);
+        Cart tempCart = jParser.readFromFile(new File(TEST_READING_FILE));
         assertAll(
-                () -> assertEquals(tempCart.getCartName(), CART_NAME),
-                () -> assertEquals(tempCart.getTotalPrice(), fakeCart.getTotalPrice())
+                () -> assertEquals(tempCart.getCartName(), CART_NAME, "failed 'testReadValidFile', names of Cart not matches"),
+                () -> assertEquals(tempCart.getTotalPrice(), fakeCart.getTotalPrice(), "failed 'testReadValidFile', price values not matches")
         );
     }
+
     @AfterEach
-    public void eraseWrittenTestData(){
-        TEST_WRITTEN_FILE.delete();
+    public void eraseWrittenTestData() {
+        new File(TEST_WRITTEN_FILE).delete();
     }
 }

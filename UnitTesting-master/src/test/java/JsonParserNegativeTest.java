@@ -14,8 +14,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonParserNegativeTest {
+
     private static JsonParser jParser;
-    private static final File INVALID_FILE = new File("src/test/resources/text.txt");
+    private static final String INVALID_FILE = "src/test/resources/text.txt";
     private static final String PATH = "src/test/resources/fake";
 
     @BeforeAll
@@ -36,15 +37,15 @@ public class JsonParserNegativeTest {
     @ParameterizedTest
     @MethodSource("params")
     @DisplayName("when readFromFile() method try to read data from non existing file" +
-                "there are 'NoSuchFileException' expecting")
+            "there are 'NoSuchFileException' expecting")
     public void testReadFromFile(File fakePath) {
-        assertThrowsExactly(NoSuchFileException.class, () -> jParser.readFromFile(fakePath));
+        assertThrowsExactly(NoSuchFileException.class, () -> jParser.readFromFile(fakePath), "expected NoSuchFileException");
     }
 
     @Test
     @DisplayName("in this case ")
     public void testReadInvalidFile() {
-        assertThrows(Exception.class, () -> jParser.readFromFile(INVALID_FILE));
+        assertThrows(Exception.class, () -> jParser.readFromFile(new File(INVALID_FILE)), "expected exception, invalid file");
     }
 
     @Test
@@ -52,6 +53,6 @@ public class JsonParserNegativeTest {
     @Disabled
     public void testWriteNonExistingCartToFile() {
         Cart cart = null;
-        assertThrows(Exception.class, () -> jParser.writeToFile(cart));
+        assertThrows(Exception.class, () -> jParser.writeToFile(cart), "skiped");
     }
 }
