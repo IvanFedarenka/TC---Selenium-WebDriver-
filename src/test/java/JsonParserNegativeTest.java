@@ -1,4 +1,4 @@
-import jdk.jfr.Description;
+
 import org.testng.annotations.*;
 import com.Coherent.sample.parser.JsonParser;
 import com.Coherent.sample.parser.NoSuchFileException;
@@ -10,12 +10,11 @@ import static org.testng.Assert.*;
 
 public class JsonParserNegativeTest {
 
-    private static JsonParser jParser;
-    private static final String INVALID_FILE = "src/test/resources/text.txt";
+    private JsonParser jParser;
     private static final String PATH = "src/test/resources/fake";
 
-    @BeforeTest
-    public static void initVars() {
+    @BeforeClass
+    public void initVars() {
         jParser = new JsonParser();
     }
 
@@ -29,23 +28,21 @@ public class JsonParserNegativeTest {
                 {PATH + "5.json"}};
     }
 
-    @Test(dataProvider = "fakeFiles")
-    @Description("when readFromFile() method try to read data from non existing file" +
-            "there are 'NoSuchFileException' expecting")
-    public void testReadFromFile(String fakePath) {
-        assertThrows(NoSuchFileException.class, () -> jParser.readFromFile(new File(fakePath)));
+    @Test(dataProvider = "fakeFiles",
+          description = "when readFromFile() method try to read data from non existing file" +
+                        "there are 'NoSuchFileException' expecting")
+    public void testReadFromFile(String param) {
+        assertThrows(NoSuchFileException.class, () -> jParser.readFromFile(new File(param)));
     }
 
-    @Test
-    @Description("in this case ")
-    public void testReadInvalidFile() {
-        assertThrows(Exception.class, () -> jParser.readFromFile(new File(INVALID_FILE)));
+    @Parameters({"param"})
+    @Test(description = "in this case ")
+    public void testReadInvalidFile(String invalidFile) {
+        assertThrows(Exception.class, () -> jParser.readFromFile(new File(invalidFile)));
     }
 
-    //--------------------DISABLED TEST--------------------------
-    @Test
+    @Test(description = "expecting an exception, when trying to write uninitialized Cart to file")
     @Ignore
-    @Description("expecting an exception, when trying to write uninitialized Cart to file")
     public void testWriteNonExistingCartToFile() {
         Cart cart = null;
         assertThrows(Exception.class, () -> jParser.writeToFile(cart));

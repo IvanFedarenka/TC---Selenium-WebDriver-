@@ -1,12 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
 <suite name="Whole" verbose="1" >
-    <parameter name="param" value="src/test/resources/fake1.json" />
-    <parameter name="param" value="src/test/resources/fake2.json" />
-    <parameter name="param" value="src/test/resources/fake3.json" />
-    <parameter name="param" value="src/test/resources/fake4.json" />
-    <parameter name="param" value="src/test/resources/fake5.json" />
     <test name="All tests">
+        <parameter name="param" value="src/test/resources/invalid2.json"/>
         <classes>
             <class name="JsonParserNegativeTest"/>
             <class name="JsonParserTest"/>

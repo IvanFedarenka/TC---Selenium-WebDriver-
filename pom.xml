@@ -11,7 +11,7 @@
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <TestNG.version>7.6.0</TestNG.version>
+        <testng.version>7.6.0</testng.version>
     </properties>
     <build>
         <plugins>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>${TestNG.version}</version>
+            <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

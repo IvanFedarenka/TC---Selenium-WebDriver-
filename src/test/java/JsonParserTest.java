@@ -1,6 +1,4 @@
 
-import jdk.jfr.Description;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -37,24 +35,20 @@ public class JsonParserTest {
         fakeCart.addRealItem(testReal);
     }
 
-    @Test
-    @Description("checking if writeToFile() method call does not throw exception and еру written file actually exists")
+    @Test(description = "checking if writeToFile() method call does not throw exception and еру written file actually exists")
     public void testWriteToFile() {
         jParser.writeToFile(fakeCart);
         assertTrue(new File(TEST_WRITTEN_FILE).exists(), "'testWriteToFile', new file wasn't created");
-
     }
 
-    //------------------Grouped assertion--------------------
-    @Test
-    @Description("checking if readFromFile() method is able to read data correctly")
+    @Test(description = "checking if readFromFile() method is able to read data correctly")
     public void testReadValidFile() {
         Cart tempCart = jParser.readFromFile(new File(TEST_READING_FILE));
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(tempCart.getCartName(), CART_NAME);
-        softAssert.assertEquals(tempCart.getTotalPrice(), fakeCart.getTotalPrice());
-        softAssert.assertAll("Soft assert fail");
+        softAssert.assertEquals(tempCart.getCartName(), CART_NAME, "cart names doesn't matches");
+        softAssert.assertEquals(tempCart.getTotalPrice(), fakeCart.getTotalPrice(), "total prices doesn't matches");
+        softAssert.assertAll();
     }
 
     @AfterMethod
