@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Whole" verbose="1" >
+    <test name="All tests">
+        <parameter name="param" value="src/test/resources/invalid2.json"/>
+        <classes>
+            <class name="JsonParserNegativeTest"/>
+            <class name="JsonParserTest"/>
+            <class name="ShopTest"/>
+        </classes>
+    </test>
+</suite>
