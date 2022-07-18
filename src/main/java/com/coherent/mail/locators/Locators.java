@@ -19,5 +19,4 @@ public class Locators {
     public static final By BUTTONS = By.tagName("button");
     public static final By COLLAPSED_MENU = By.xpath("//div[@class='ToggleWidget-Button']/button");
 
-
 }
