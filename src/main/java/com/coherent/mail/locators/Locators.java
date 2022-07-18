@@ -4,10 +4,6 @@ import org.openqa.selenium.By;
 
 public class Locators {
 
-    public static final String BASE_URL = "https://mail.yandex.com";
-    public static final String LOGIN = "SeleniumTestUser1";
-    public static final String PASSWORD = "Selenium_22";
-
     public static final By LOGIN_INPUT = By.name("login");
     public static final By PASSWORD_INPUT = By.id("passp-field-passwd");
 
