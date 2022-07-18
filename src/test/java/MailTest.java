@@ -30,7 +30,7 @@ public class MailTest {
         driver.findElement(PASSWORD_INPUT).submit();
         Thread.sleep(5000);
 
-        assertTrue(driver.findElement(SETTINGS_BUTTON).isDisplayed());
+        assertTrue(driver.findElement(SETTINGS_BUTTON).isDisplayed(), "Account's settings button wasn't found");
     }
 
     @AfterEach
