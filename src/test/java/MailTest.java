@@ -5,10 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.io.*;
-import java.util.Properties;
-
 import static com.coherent.mail.locators.Locators.*;
+import static com.coherent.mail.util.propertyManager.PropertyManager.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MailTest {
@@ -22,9 +20,10 @@ public class MailTest {
     }
 
     @Test
-    public void testLogin() throws InterruptedException, IOException {
-        driver.get(getProperty("URL"));
+    public void testLogin() throws InterruptedException{
+        driver.get(getProperty("url"));
         driver.findElement(START_LOGIN_BUTTON).click();
+        assertEquals("Authorization", driver.getTitle(), "redirection to the login page");
         driver.findElement(LOGIN_INPUT).sendKeys(getProperty("login"));
         driver.findElement(LOGIN_INPUT).submit();
         Thread.sleep(1000);
@@ -41,12 +40,6 @@ public class MailTest {
                 () -> assertTrue(driver.findElements(BUTTONS).get(0).isDisplayed(), "button not found"),
                 () -> assertTrue(driver.findElement(COLLAPSED_MENU).isDisplayed(), "collapsed menu not found")
         );
-    }
-
-    private String getProperty(String name) throws IOException {
-        Properties props = new Properties();
-        props.load(new InputStreamReader(new FileInputStream("src/main/resources/properties/selen.properties"), "UTF-8"));
-        return props.getProperty(name);
     }
 
     @AfterEach
