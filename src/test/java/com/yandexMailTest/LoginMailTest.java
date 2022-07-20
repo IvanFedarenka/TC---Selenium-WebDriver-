@@ -45,8 +45,8 @@ public class LoginMailTest extends BaseTest {
 
         Thread.sleep(6000);   // it's kind of an explicit waiter. it acts only once and in exact place
 
-        assertTrue(driver.findElement(MAIN_PAGE_ACCOUNT_NAME).isDisplayed());
-        assertTrue(driver.findElement(SETTINGS_BUTTON).isDisplayed());
+        assertTrue(driver.findElement(MAIN_PAGE_ACCOUNT_NAME).isDisplayed(), "account name is missing");
+        assertTrue(driver.findElement(SETTINGS_BUTTON).isDisplayed(), "settings button is missing");
     }
 
     @AfterMethod

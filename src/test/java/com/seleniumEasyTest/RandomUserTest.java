@@ -23,8 +23,8 @@ public class RandomUserTest extends BaseTest {
         wait.until(not(textToBePresentInElement(usersPlace, "loading...")));
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(usersPlace.getText().contains("First Name :"));
-        softAssert.assertTrue(usersPlace.getText().contains("Last Name :"));
+        softAssert.assertTrue(usersPlace.getText().contains("First Name :"), "user's first name is missing");
+        softAssert.assertTrue(usersPlace.getText().contains("Last Name :"), "user's last name is missing");
         softAssert.assertAll();
     }
 }

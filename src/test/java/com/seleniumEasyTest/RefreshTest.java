@@ -18,7 +18,7 @@ public class RefreshTest extends BaseTest {
         }
         driver.navigate().refresh();
 
-        assertEquals("0%", driver.findElement(PROGRESS).getText());
+        assertEquals("0%", driver.findElement(PROGRESS).getText(), "page weren't refreshed");
     }
 
     private int getProgress() {
