@@ -6,15 +6,9 @@ public class TableElement {
     private String position;
     private String office;
 
-    public void setName(String name) {
+    public TableElement(String name, String position, String office) {
         this.name = name;
-    }
-
-    public void setPosition(String position) {
         this.position = position;
-    }
-
-    public void setOffice(String office) {
         this.office = office;
     }
 

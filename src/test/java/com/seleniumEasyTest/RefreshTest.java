@@ -3,30 +3,20 @@ package com.seleniumEasyTest;
 import com.BaseTest;
 import org.testng.annotations.Test;
 
-import static com.coherent.task.propertyManager.PropertyManager.*;
-import static com.coherent.task.seleniumEasy.locators.RefreshLocators.*;
+import static com.coherent.task.locators.seleniumEasy.RefreshLocators.*;
+import static com.coherent.task.utils.storage.PropertiesStorage.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 import static org.testng.Assert.*;
 
 public class RefreshTest extends BaseTest {
 
-    @Test
+    @Test (description = "Testing dynamic data loading")
     public void testRefresh() {
-        driver.get(property("download_url"));
+        driver.get(DOWNLOAD_BASE_URL);
         driver.findElement(START_BUTTON).click();
-        while (getProgress() <= 50) {
-            continue;
-        }
+        driverManager.getWaiter(20).until(textToBePresentInElement(driver.findElement(PROGRESS), "50%"));
         driver.navigate().refresh();
 
-        assertEquals("0%", driver.findElement(PROGRESS).getText(), "page weren't refreshed");
-    }
-
-    private int getProgress() {
-        String replace = driver
-                .findElement(PROGRESS)
-                .getText()
-                .replace('%', ' ')
-                .trim();
-        return Integer.parseInt(replace);
+        assertEquals("0%", driver.findElement(PROGRESS).getText(), "Page weren't refreshed");
     }
 }

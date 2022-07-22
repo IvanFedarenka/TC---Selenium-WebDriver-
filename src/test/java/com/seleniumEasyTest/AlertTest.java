@@ -5,45 +5,47 @@ import org.openqa.selenium.Alert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.coherent.task.propertyManager.PropertyManager.*;
-import static com.coherent.task.seleniumEasy.locators.AlertLocators.*;
+import static com.coherent.task.locators.seleniumEasy.AlertLocators.*;
+import static com.coherent.task.utils.storage.PropertiesStorage.*;
 import static org.testng.Assert.*;
 
 public class AlertTest extends BaseTest {
 
+    private static final String CONFIRM_EXPECTED_MESSAGE = "You pressed OK!";
+    private static final String DECLINE_EXPECTED_MESSAGE = "You pressed Cancel!";
+    private static final String ALERT_BOX_TEST_MESSAGE = "here is the test message";
+
+
     @BeforeMethod
     public void goTo() {
-        driver.get(property("alert_url"));
+        driver.get(ALERT_BASE_URL);
     }
 
-    @Test
+    @Test(description = "Testing confirm box functional through Accept")
     public void testAcceptConfirmBox() {
         driver.findElement(CONFIRM_BOX_BUTTON).click();
         Alert alert = driver.switchTo().alert();
         alert.accept();
 
-        String expectedMessage = "You pressed OK!";
-        assertEquals(expectedMessage, driver.findElement(CONFIRM_BOX_ANSWER_TEXT).getText(), "test accept confirm box failed");
+        assertEquals(CONFIRM_EXPECTED_MESSAGE, driver.findElement(CONFIRM_BOX_ANSWER_TEXT).getText(), "Test accept confirm box failed");
     }
 
-    @Test
+    @Test(description = "Testing confirm box functional through Decline")
     public void testDeclineConfirmBox() {
         driver.findElement(CONFIRM_BOX_BUTTON).click();
         Alert alert = driver.switchTo().alert();
         alert.dismiss();
 
-        String expectedMessage = "You pressed Cancel!";
-        assertEquals(expectedMessage, driver.findElement(CONFIRM_BOX_ANSWER_TEXT).getText(), "test decline confirm box failed");
+        assertEquals(DECLINE_EXPECTED_MESSAGE, driver.findElement(CONFIRM_BOX_ANSWER_TEXT).getText(), "Test decline confirm box failed");
     }
 
-    @Test
+    @Test(description = "Testing alert box functional< sending message in it")
     public void testAlertBox() {
         driver.findElement(PROMPT_BUTTON).click();
-        String message = "here is the test message";
         Alert alert = driver.switchTo().alert();
-        alert.sendKeys(message);
+        alert.sendKeys(ALERT_BOX_TEST_MESSAGE);
         alert.accept();
 
-        assertTrue(driver.findElement(PROMPT_ANSWER_TEXT).getText().contains(message), "test alert box fail");
+        assertTrue(driver.findElement(PROMPT_ANSWER_TEXT).getText().contains(ALERT_BOX_TEST_MESSAGE), "Test alert box fail");
     }
 }
