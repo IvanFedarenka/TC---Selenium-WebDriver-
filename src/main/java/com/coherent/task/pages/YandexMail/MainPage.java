@@ -3,9 +3,10 @@ package com.coherent.task.pages.YandexMail;
 import com.coherent.task.pages.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.List;
+import static java.time.Duration.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class MainPage extends BasePage {
 
@@ -18,20 +19,33 @@ public class MainPage extends BasePage {
         super(driver);
     }
 
-    public WebElement getAccountName() {
-        return driver.findElement(ACCOUNT_NAME);
+    public boolean isAccountNameDisplayed() {
+        return driver.findElement(ACCOUNT_NAME).isDisplayed();
     }
 
-    public WebElement getAccountIcon() {
-        return driver.findElement(ACCOUNT_ICON);
+    public boolean isAccountIconDisplayed() {
+        return driver.findElement(ACCOUNT_ICON).isDisplayed();
     }
 
-    public WebElement getSettingsButton() {
-        return driver.findElement(SETTINGS_BUTTON);
+    public boolean isSettingsButtonDisplayed() {
+        return driver.findElement(SETTINGS_BUTTON).isDisplayed();
     }
 
-    public WebElement getLogoutButton() {
-        return driver.findElement(LOG_OUT);
+    public MainPage clickAccountName() {
+        driver.findElement(ACCOUNT_NAME).click();
+        return this;
     }
 
+    public LoginPage clickLogoutButton() {
+        driver.findElement(LOG_OUT).click();
+        return new LoginPage(driver);
+    }
+
+    public String getPageTitle() {
+        return driver.getTitle();
+    }
+
+    public void waitVisibilityOfAccountName() {
+        new WebDriverWait(driver, ofSeconds(7)).until(visibilityOf(driver.findElement(ACCOUNT_NAME)));
+    }
 }

@@ -5,8 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
 import static java.time.Duration.*;
 
 @Slf4j
@@ -18,7 +16,7 @@ public class DriverRunner {
     private DriverRunner() {
     }
 
-    public static DriverRunner getInstance() {
+    public static synchronized DriverRunner getInstance() {
         if (driverRunner == null) {
             driverRunner = new DriverRunner();
         }
