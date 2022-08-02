@@ -18,6 +18,13 @@ public class LoginPage extends BasePage {
     @FindBy(linkText = "Log in")
     private WebElement START_LOGIN_BUTTON;
 
+    @FindBy(xpath = "//div[@id='field:link-login']/a")
+    private WebElement FORGOT_LOGIN_LINK;
+
+    @FindBy(xpath = "//div[@id='field:link-passwd']/a")
+    private WebElement FORGOT_PASSWORD_LINK;
+
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -34,9 +41,11 @@ public class LoginPage extends BasePage {
         return initElements(driver, MainPage.class);
     }
 
-    public MainPage logIn(String login, String password) {
-        return initElements(driver, StartPage.class)
-                .goToStartPage().startLogin()
-                .sentLogin(login).sentPassword(password);
+    public boolean isForgotLoginLinkPresented(){
+        return FORGOT_LOGIN_LINK.isDisplayed();
+    }
+
+    public boolean isForgotPasswordLinkPresented(){
+        return FORGOT_PASSWORD_LINK.isDisplayed();
     }
 }
