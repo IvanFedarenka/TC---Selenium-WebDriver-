@@ -13,7 +13,7 @@ public class PropertyManager {
 
     private static final String  PROPS_PATH = "src/test/resources/testData.properties";
 
-    public static String property(String name) {
+    public static String getProperty(String name) {
         Properties props = new Properties();
         try {
             props.load(new InputStreamReader(new FileInputStream(PROPS_PATH), "UTF-8"));

@@ -15,7 +15,7 @@ public class DriverRunner {
 
     private DriverRunner() {
     }
-    public static DriverRunner getInstance(){
+    public static synchronized DriverRunner getInstance(){
         if(driverRunner==null){
             driverRunner = new DriverRunner();
         }

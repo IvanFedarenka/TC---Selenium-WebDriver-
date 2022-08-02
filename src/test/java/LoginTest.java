@@ -1,8 +1,8 @@
 import com.coherent.task.driver.DriverRunner;
 import com.coherent.task.pages.YandexMail.LoginPage;
 import com.coherent.task.pages.YandexMail.MainPage;
+import com.coherent.task.pages.YandexMail.StartPage;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
@@ -13,47 +13,47 @@ import static org.testng.Assert.*;
 
 public class LoginTest {
 
-    private DriverRunner driverRunner = getInstance();
+    private final DriverRunner driverRunner = getInstance();
     private WebDriver driver;
-    private LoginPage loginPage;
-    private MainPage mainPage;
-    private static final String PAGE_TITLE = "Authorization";
+    private static final String EXPECTED_PAGE_TITLE = "Authorization";
 
-    @BeforeGroups(groups = {"login"})
+    @BeforeGroups(groups = "logIn")
     public void initDriver() {
         driver = driverRunner.getDriver();
-        loginPage = initElements(driver, LoginPage.class);
-        mainPage = initElements(driver, MainPage.class);
     }
 
-    @BeforeGroups(groups = {"logout"})
+    @BeforeGroups(groups = "logOut")
     public void prepareAccount() {
         initDriver();
-        loginPage.goTo().logIn(VALID_LOGIN, VALID_PASSWORD);
+        initElements(driver, LoginPage.class).logIn(VALID_LOGIN, VALID_PASSWORD);
     }
 
-    @Test(groups = {"login"},
-          description = "Testing logIn with valid credentials functional")
+    @Test(groups = "logIn",
+            description = "Testing logIn functional with valid credentials")
     public void testLogin() {
-        loginPage.goTo()
+        MainPage mainPage = initElements(driver, StartPage.class)
+                .goToStartPage()
+                .startLogin()
                 .sentLogin(VALID_LOGIN)
                 .sentPassword(VALID_PASSWORD);
-        driverRunner.getWaiter(5).until(ExpectedConditions.visibilityOf(mainPage.getAccountName()));
+        mainPage.waitVisibilityOfAccountName();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(mainPage.getAccountName().isDisplayed(), "Account name on the main page is missing");
-        softAssert.assertTrue(mainPage.getSettingsButton().isDisplayed(), "Settings button on the main page is missing");
-        softAssert.assertTrue(mainPage.getAccountIcon().isDisplayed(), "Account icon on the main page is missing");
+        softAssert.assertTrue(mainPage.isAccountNameDisplayed(), "Account name on the main page is missing");
+        softAssert.assertTrue(mainPage.isSettingsButtonDisplayed(), "Settings button on the main page is missing");
+        softAssert.assertTrue(mainPage.isAccountIconDisplayed(), "Account icon on the main page is missing");
         softAssert.assertAll();
     }
 
-    @Test(groups = "logout",
-          description = "Testing logout from current account functional")
+    @Test(groups = "logOut",
+            description = "Testing leaving current account functional")
     public void testLogout() {
-        mainPage.getAccountName().click();
-        mainPage.getLogoutButton().click();
+        MainPage mainPage = initElements(driver, MainPage.class);
+        mainPage.waitVisibilityOfAccountName();
+        mainPage.clickAccountName()
+                .clickLogoutButton();
 
-        assertEquals(PAGE_TITLE, driver.getTitle(), "Test logout fail");
+        assertEquals(EXPECTED_PAGE_TITLE, mainPage.getPageTitle(), "Test logout fail");
     }
 
     @AfterMethod

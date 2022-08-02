@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static com.coherent.task.utils.PropertiesStorage.*;
+import static org.openqa.selenium.support.PageFactory.*;
 
 public class LoginPage extends BasePage {
 
@@ -22,26 +22,21 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    public LoginPage goTo() {
-        driver.get(LOGIN_PAGE_URL);
-        if (START_LOGIN_BUTTON.isDisplayed()) {
-            START_LOGIN_BUTTON.click();
-        } else return this;
-        return this;
-    }
-
     public LoginPage sentLogin(String login) {
         LOGIN_INPUT.sendKeys(login);
         LOGIN_INPUT.submit();
         return this;
     }
 
-    public void sentPassword(String password) {
+    public MainPage sentPassword(String password) {
         PASSWORD_INPUT.sendKeys(password);
         PASSWORD_INPUT.submit();
+        return initElements(driver, MainPage.class);
     }
 
-    public void logIn(String login, String password) {
-        sentLogin(login).sentPassword(password);
+    public MainPage logIn(String login, String password) {
+        return initElements(driver, StartPage.class)
+                .goToStartPage().startLogin()
+                .sentLogin(login).sentPassword(password);
     }
 }
