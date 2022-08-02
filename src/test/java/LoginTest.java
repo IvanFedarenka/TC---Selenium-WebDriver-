@@ -1,40 +1,27 @@
-import com.coherent.task.driver.DriverRunner;
+
 import com.coherent.task.pages.YandexMail.LoginPage;
 import com.coherent.task.pages.YandexMail.MainPage;
-import com.coherent.task.pages.YandexMail.StartPage;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
-import static com.coherent.task.driver.DriverRunner.*;
 import static com.coherent.task.utils.properties.PropertiesStorage.*;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
-public class LoginTest {
+public class LoginTest extends BaseTest {
 
-    private final DriverRunner driverRunner = getInstance();
-    private WebDriver driver;
     private static final String EXPECTED_PAGE_TITLE = "Authorization";
 
-    @BeforeGroups(groups = "logIn")
-    public void initDriver() {
-        driver = driverRunner.getDriver();
-    }
-
-    @BeforeGroups(groups = "logOut")
-    public void prepareAccount() {
-        initDriver();
-        new LoginPage(driver).logIn(VALID_LOGIN, VALID_PASSWORD);
-    }
-
     @Test(groups = "logIn",
-          description = "Testing logIn functional with valid credentials")
+            description = "Testing logIn functional with valid credentials")
     public void testLogin() {
-        MainPage mainPage = new StartPage(driver)
-                .goToStartPage()
-                .startLogin()
-                .sentLogin(VALID_LOGIN)
-                .sentPassword(VALID_PASSWORD);
+        LoginPage loginPage = startPage.startLogin();
+        assertTrue(loginPage.isForgotLoginLinkPresented(), "Link 'I forgot login' is missing");
+
+        loginPage.sentLogin(VALID_LOGIN);
+        assertTrue(loginPage.isForgotPasswordLinkPresented(), "Link 'I forgot password' is missing");
+
+        MainPage mainPage = loginPage.sentPassword(VALID_PASSWORD);
         mainPage.waitVisibilityOfAccountName();
 
         SoftAssert softAssert = new SoftAssert();
@@ -45,9 +32,16 @@ public class LoginTest {
     }
 
     @Test(groups = "logOut",
-          description = "Testing leaving current account functional")
+            description = "Testing leaving current account functional")
     public void testLogout() {
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = openStartPage()
+                .startLogin()
+                .sentLogin(VALID_LOGIN)
+                .sentPassword(VALID_PASSWORD);
+
+        assertTrue(mainPage.isSettingsButtonDisplayed(), "Settings button on the main page is missing");
+        assertTrue(mainPage.isAccountIconDisplayed(), "Account icon on the main page is missing");
+
         mainPage.waitVisibilityOfAccountName();
         mainPage.clickAccountName()
                 .clickLogoutButton();
