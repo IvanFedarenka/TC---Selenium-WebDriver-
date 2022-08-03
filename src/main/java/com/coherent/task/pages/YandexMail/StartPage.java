@@ -5,19 +5,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static org.openqa.selenium.support.PageFactory.*;
-
 public class StartPage extends BasePage {
 
     @FindBy(linkText = "Log in")
-    private WebElement START_LOGIN_BUTTON;
+    private WebElement goToLoginButton;
 
     public StartPage(WebDriver driver) {
         super(driver);
     }
 
     public LoginPage startLogin() {
-        START_LOGIN_BUTTON.click();
+        goToLoginButton.click();
         return new LoginPage(driver);
     }
 }

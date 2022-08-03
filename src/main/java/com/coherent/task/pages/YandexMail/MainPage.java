@@ -14,46 +14,46 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 public class MainPage extends BasePage {
 
     @FindBy(css = ".NewSettings__icon--1MMbG")
-    private WebElement SETTINGS_BUTTON;
+    private WebElement settingButton;
 
     @FindBy(css = "span.user-account__name")
-    private WebElement ACCOUNT_NAME;
+    private WebElement accountName;
 
     @FindBy(xpath = "//img[@class='user-pic__image']")
-    private WebElement ACCOUNT_ICON;
+    private WebElement accountIcon;
 
     @FindBy(css = "a[aria-label='Log out']")
-    private WebElement LOG_OUT;
+    private WebElement LogOutLink;
 
     public MainPage(WebDriver driver) {
         super(driver);
     }
 
     public boolean isAccountNameDisplayed() {
-        boolean isNameDisplayed = ACCOUNT_NAME.isDisplayed();
-        log.info("Account name " + ACCOUNT_NAME.getText() + " found");
+        boolean isNameDisplayed = accountName.isDisplayed();
+        log.info("Account name " + accountName.getText() + " found");
         return isNameDisplayed;
     }
 
     public boolean isAccountIconDisplayed() {
-        boolean isIconDisplayed = ACCOUNT_ICON.isDisplayed();
+        boolean isIconDisplayed = accountIcon.isDisplayed();
         log.info("Account name found");
         return isIconDisplayed;
     }
 
     public boolean isSettingsButtonDisplayed() {
-        boolean isButtonDisplayed = SETTINGS_BUTTON.isDisplayed();
+        boolean isButtonDisplayed = settingButton.isDisplayed();
         log.info("Settings button found");
         return isButtonDisplayed;
     }
 
     public MainPage clickAccountName() {
-        ACCOUNT_NAME.click();
+        accountName.click();
         return this;
     }
 
     public LoginPage clickLogoutButton() {
-        LOG_OUT.click();
+        LogOutLink.click();
         return new LoginPage(driver);
     }
 
@@ -62,7 +62,7 @@ public class MainPage extends BasePage {
     }
 
     public void waitVisibilityOfAccountName() {
-        new WebDriverWait(driver, ofSeconds(7)).until(visibilityOf(ACCOUNT_NAME));
+        new WebDriverWait(driver, ofSeconds(7)).until(visibilityOf(accountName));
     }
 
 }

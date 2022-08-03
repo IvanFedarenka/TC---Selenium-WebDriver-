@@ -10,19 +10,19 @@ import org.openqa.selenium.support.FindBy;
 public class LoginPage extends BasePage {
 
     @FindBy(name = "login")
-    private WebElement LOGIN_INPUT;
+    private WebElement loginInput;
 
     @FindBy(id = "passp-field-passwd")
-    private WebElement PASSWORD_INPUT;
+    private WebElement passwordInput;
 
     @FindBy(linkText = "Log in")
-    private WebElement START_LOGIN_BUTTON;
+    private WebElement startLoginButton;
 
     @FindBy(xpath = "//div[@id='field:link-login']/a")
-    private WebElement FORGOT_LOGIN_LINK;
+    private WebElement forgotLoginButton;
 
     @FindBy(xpath = "//div[@id='field:link-passwd']/a")
-    private WebElement FORGOT_PASSWORD_LINK;
+    private WebElement forgotPasswordButton;
 
 
     public LoginPage(WebDriver driver) {
@@ -30,27 +30,27 @@ public class LoginPage extends BasePage {
     }
 
     public LoginPage sentLogin(String login) {
-        LOGIN_INPUT.sendKeys(login);
+        loginInput.sendKeys(login);
         log.info("login were sent");
-        LOGIN_INPUT.submit();
+        loginInput.submit();
         return this;
     }
 
     public MainPage sentPassword(String password) {
-        PASSWORD_INPUT.sendKeys(password);
+        passwordInput.sendKeys(password);
         log.info("password were sent");
-        PASSWORD_INPUT.submit();
+        passwordInput.submit();
         return new MainPage(driver);
     }
 
     public boolean isForgotLoginLinkPresented() {
-        boolean isLinkDisplayed = FORGOT_LOGIN_LINK.isDisplayed();
+        boolean isLinkDisplayed = forgotLoginButton.isDisplayed();
         log.info("Link 'forgot login' found");
         return isLinkDisplayed;
     }
 
     public boolean isForgotPasswordLinkPresented() {
-        boolean isLinkDisplayed = FORGOT_PASSWORD_LINK.isDisplayed();
+        boolean isLinkDisplayed = forgotPasswordButton.isDisplayed();
         log.info("Link 'forgot password' found");
         return isLinkDisplayed;
     }
