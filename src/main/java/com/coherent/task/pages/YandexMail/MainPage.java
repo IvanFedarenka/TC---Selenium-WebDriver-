@@ -1,7 +1,7 @@
 package com.coherent.task.pages.YandexMail;
 
 import com.coherent.task.pages.BasePage;
-import org.openqa.selenium.By;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static java.time.Duration.ofSeconds;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
+@Slf4j
 public class MainPage extends BasePage {
 
     @FindBy(css = ".NewSettings__icon--1MMbG")
@@ -18,7 +19,7 @@ public class MainPage extends BasePage {
     @FindBy(css = "span.user-account__name")
     private WebElement ACCOUNT_NAME;
 
-    @FindBy(xpath = "//div[@class='user-pic user-pic_has-plus_ user-account__pic']/img[@class='user-pic__image']")
+    @FindBy(xpath = "//img[@class='user-pic__image']")
     private WebElement ACCOUNT_ICON;
 
     @FindBy(css = "a[aria-label='Log out']")
@@ -29,15 +30,21 @@ public class MainPage extends BasePage {
     }
 
     public boolean isAccountNameDisplayed() {
-        return ACCOUNT_NAME.isDisplayed();
+        boolean isNameDisplayed = ACCOUNT_NAME.isDisplayed();
+        log.info("Account name " + ACCOUNT_NAME.getText() + " found");
+        return isNameDisplayed;
     }
 
     public boolean isAccountIconDisplayed() {
-        return ACCOUNT_ICON.isDisplayed();
+        boolean isIconDisplayed = ACCOUNT_ICON.isDisplayed();
+        log.info("Account name found");
+        return isIconDisplayed;
     }
 
     public boolean isSettingsButtonDisplayed() {
-        return SETTINGS_BUTTON.isDisplayed();
+        boolean isButtonDisplayed = SETTINGS_BUTTON.isDisplayed();
+        log.info("Settings button found");
+        return isButtonDisplayed;
     }
 
     public MainPage clickAccountName() {

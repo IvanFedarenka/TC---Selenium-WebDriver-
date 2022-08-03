@@ -4,7 +4,8 @@ import com.coherent.task.pages.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+
+import static org.openqa.selenium.support.PageFactory.*;
 
 public class StartPage extends BasePage {
 
@@ -17,6 +18,6 @@ public class StartPage extends BasePage {
 
     public LoginPage startLogin() {
         START_LOGIN_BUTTON.click();
-        return PageFactory.initElements(driver, LoginPage.class);
+        return new LoginPage(driver);
     }
 }

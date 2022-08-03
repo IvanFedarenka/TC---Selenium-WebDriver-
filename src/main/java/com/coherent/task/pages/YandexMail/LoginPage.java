@@ -1,12 +1,12 @@
 package com.coherent.task.pages.YandexMail;
 
 import com.coherent.task.pages.BasePage;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static org.openqa.selenium.support.PageFactory.*;
-
+@Slf4j
 public class LoginPage extends BasePage {
 
     @FindBy(name = "login")
@@ -31,21 +31,27 @@ public class LoginPage extends BasePage {
 
     public LoginPage sentLogin(String login) {
         LOGIN_INPUT.sendKeys(login);
+        log.info("login were sent");
         LOGIN_INPUT.submit();
         return this;
     }
 
     public MainPage sentPassword(String password) {
         PASSWORD_INPUT.sendKeys(password);
+        log.info("password were sent");
         PASSWORD_INPUT.submit();
-        return initElements(driver, MainPage.class);
+        return new MainPage(driver);
     }
 
-    public boolean isForgotLoginLinkPresented(){
-        return FORGOT_LOGIN_LINK.isDisplayed();
+    public boolean isForgotLoginLinkPresented() {
+        boolean isLinkDisplayed = FORGOT_LOGIN_LINK.isDisplayed();
+        log.info("Link 'forgot login' found");
+        return isLinkDisplayed;
     }
 
-    public boolean isForgotPasswordLinkPresented(){
-        return FORGOT_PASSWORD_LINK.isDisplayed();
+    public boolean isForgotPasswordLinkPresented() {
+        boolean isLinkDisplayed = FORGOT_PASSWORD_LINK.isDisplayed();
+        log.info("Link 'forgot password' found");
+        return isLinkDisplayed;
     }
 }

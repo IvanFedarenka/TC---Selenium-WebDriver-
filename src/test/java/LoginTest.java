@@ -14,7 +14,7 @@ public class LoginTest extends BaseTest {
     @Test(groups = "logIn",
             description = "Testing logIn functional with valid credentials")
     public void testLogin() {
-        LoginPage loginPage = startPage.startLogin();
+        LoginPage loginPage = openStartPage().startLogin();
         assertTrue(loginPage.isForgotLoginLinkPresented(), "Link 'I forgot login' is missing");
 
         loginPage.sentLogin(VALID_LOGIN);
