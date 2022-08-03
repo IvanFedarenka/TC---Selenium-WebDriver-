@@ -12,8 +12,6 @@ import java.io.IOException;
 @Slf4j
 public class ScreenshotHandler {
 
-    public static final String SCREENSHOT_PATH = "target/newShot.png";
-
     public void makeShot(WebDriver driver, String path) {
         TakesScreenshot shot = (TakesScreenshot) driver;
         File screenFile = shot.getScreenshotAs(OutputType.FILE);

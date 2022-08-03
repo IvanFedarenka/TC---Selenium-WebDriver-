@@ -6,7 +6,6 @@ import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import static com.coherent.task.utils.properties.PropertiesStorage.*;
-import static com.coherent.task.utils.screenshotHandler.ScreenshotHandler.SCREENSHOT_PATH;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -18,7 +17,7 @@ public class LoginTest extends BaseTest {
             description = "Testing logIn functional with valid credentials")
     public void testLogin() {
         LoginPage loginPage = startPage.startLogin();
-        new ScreenshotHandler().makeShot(driver, SCREENSHOT_PATH);
+        new ScreenshotHandler().makeShot(driver, "target/newShot.png");
         assertTrue(loginPage.isForgotLoginLinkPresented(), "Link 'I forgot login' is missing");
 
         loginPage.sentLogin(VALID_LOGIN);
