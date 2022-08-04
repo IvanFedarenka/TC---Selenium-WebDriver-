@@ -16,7 +16,7 @@ public class LoginTest extends BaseTest {
     @Test(groups = "logIn",
             description = "Testing logIn functional with valid credentials")
     public void testLogin() {
-        LoginPage loginPage = startPage.startLogin();
+        LoginPage loginPage = openStartPage().startLogin();
         new ScreenshotHandler().makeShot(driver, "target/newShot.png");
         assertTrue(loginPage.isForgotLoginLinkPresented(), "Link 'I forgot login' is missing");
 
