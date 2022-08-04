@@ -50,9 +50,4 @@ public class LoginTest extends BaseTest {
 
         assertEquals(EXPECTED_PAGE_TITLE, mainPage.getPageTitle(), "Test logout fail");
     }
-
-    @AfterMethod
-    public void close() {
-        driverRunner.close();
-    }
 }
