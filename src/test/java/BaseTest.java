@@ -13,13 +13,10 @@ public class BaseTest {
 
     protected DriverRunner driverRunner = getInstance();
     protected WebDriver driver;
-    protected StartPage startPage;
 
     @BeforeMethod
     public void initDriver() {
         driver = driverRunner.getDriver();
-        startPage = PageFactory.initElements(driver, StartPage.class);
-        openStartPage();
     }
 
     @AfterMethod
@@ -29,6 +26,6 @@ public class BaseTest {
 
     public StartPage openStartPage() {
         driver.get(START_PAGE_URL);
-        return startPage;
+        return new StartPage(driver);
     }
 }
