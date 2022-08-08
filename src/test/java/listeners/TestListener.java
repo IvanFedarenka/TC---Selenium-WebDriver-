@@ -19,19 +19,29 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import java.io.*;
-import java.util.Date;
 
 import static com.coherent.task.driver.DriverRunner.*;
-import static com.google.common.hash.Hashing.md5;
-import static io.qameta.allure.Allure.*;
-import static java.lang.String.format;
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Slf4j
 public class TestListener implements ITestListener {
 
     @Override
     public void onFinish(ITestContext context) {
+        prepareEnvironmentData();
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+        WebDriver driver = getInstance().getDriverInstance();
+        saveScreenshot(driver);
+    }
+
+    @Attachment(value = "Screenshot", type = "image/png")
+    public byte[] saveScreenshot(WebDriver driver) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    private void prepareEnvironmentData() {
         WebDriver driver = getInstance().getDriverInstance();
         Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
         String environment = "OS = " + caps.getPlatformName() + "\n" +
@@ -46,16 +56,5 @@ public class TestListener implements ITestListener {
         } catch (IOException e) {
             log.error("Unsuccess while writing the environment file", e);
         }
-    }
-
-    @Override
-    public void onTestFailure(ITestResult result) {
-        WebDriver driver = getInstance().getDriverInstance();
-        saveScreenshot(driver);
-    }
-
-    @Attachment(value = "Screenshot", type = "image/png")
-    public byte[] saveScreenshot(WebDriver driver) {
-        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 }

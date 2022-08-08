@@ -2,7 +2,6 @@ package tests;
 
 import com.coherent.task.pages.YandexMail.LoginPage;
 import com.coherent.task.pages.YandexMail.MainPage;
-import com.coherent.task.utils.logger.AllureLogger;
 import io.qameta.allure.*;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
@@ -12,10 +11,10 @@ import static io.qameta.allure.SeverityLevel.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+
 @Feature("Account enter / exit functional")
 public class LoginTest extends BaseTest {
 
-    private AllureLogger log = new AllureLogger();
     private static final String INCORRECT_PAGE_TITLE = "NEAuthorization";
 
     @Test
@@ -39,7 +38,6 @@ public class LoginTest extends BaseTest {
         softAssert.assertTrue(mainPage.isSettingsButtonDisplayed(), "Settings button on the main page is missing");
         softAssert.assertTrue(mainPage.isAccountIconDisplayed(), "Account icon on the main page is missing");
         softAssert.assertAll();
-
     }
 
     @Test

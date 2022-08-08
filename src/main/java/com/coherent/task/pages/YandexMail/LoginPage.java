@@ -1,8 +1,6 @@
 package com.coherent.task.pages.YandexMail;
 
-import com.beust.ah.A;
 import com.coherent.task.pages.BasePage;
-import com.coherent.task.utils.logger.AllureLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,8 +16,6 @@ public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {
         super(driver);
     }
-
-    private AllureLogger log = new AllureLogger();
 
     public LoginPage sentLogin(String login) {
         WebElement loginField = driver.findElement(LOGIN_INPUT);
