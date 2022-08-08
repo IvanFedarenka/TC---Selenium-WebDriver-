@@ -1,6 +1,8 @@
 package com.coherent.task.pages.YandexMail;
 
+import com.beust.ah.A;
 import com.coherent.task.pages.BasePage;
+import com.coherent.task.utils.logger.AllureLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,6 +19,8 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
+    private AllureLogger log = new AllureLogger();
+
     public LoginPage sentLogin(String login) {
         WebElement loginField = driver.findElement(LOGIN_INPUT);
         loginField.sendKeys(login);
@@ -32,10 +36,14 @@ public class LoginPage extends BasePage {
     }
 
     public boolean isForgotLoginLinkPresented() {
-        return driver.findElement(FORGOT_LOGIN_LINK).isDisplayed();
+        boolean isLinkVisible = driver.findElement(FORGOT_LOGIN_LINK).isDisplayed();
+        log.info("Checking visability of 'forgot login link'");
+        return isLinkVisible;
     }
 
     public boolean isForgotPasswordLinkPresented() {
-        return driver.findElement(FORGOT_PASSWORD_LINK).isDisplayed();
+        boolean isLinkVisible = driver.findElement(FORGOT_PASSWORD_LINK).isDisplayed();
+        log.info("Checking visability of 'forgot password link'");
+        return isLinkVisible;
     }
 }

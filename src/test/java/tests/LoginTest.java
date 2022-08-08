@@ -2,6 +2,7 @@ package tests;
 
 import com.coherent.task.pages.YandexMail.LoginPage;
 import com.coherent.task.pages.YandexMail.MainPage;
+import com.coherent.task.utils.logger.AllureLogger;
 import io.qameta.allure.*;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
@@ -14,19 +15,21 @@ import static org.testng.Assert.assertTrue;
 @Feature("Account enter / exit functional")
 public class LoginTest extends BaseTest {
 
+    private AllureLogger log = new AllureLogger();
     private static final String INCORRECT_PAGE_TITLE = "NEAuthorization";
 
-    @Step("Testing logIn with valid credentials")
-    @Test(groups = {"login"})
+    @Test
     @Description("SHOULD PASS, DATA IS CORRECT")
-    @AllureId("1L")
+    @TmsLink("1L")
     @Severity(CRITICAL)
     public void testLogin() {
         LoginPage loginPage = openStartPage().startLogin();
         assertTrue(loginPage.isForgotLoginLinkPresented(), "Link 'I forgot login' is missing");
+        log.info(" -first assert passed");
 
         loginPage.sentLogin(VALID_LOGIN);
         assertTrue(loginPage.isForgotPasswordLinkPresented(), "Link 'I forgot password' is missing");
+        log.info(" -second assert passed");
 
         MainPage mainPage = loginPage.sentPassword(VALID_PASSWORD);
         mainPage.waitVisibilityOfAccountName();
@@ -36,12 +39,12 @@ public class LoginTest extends BaseTest {
         softAssert.assertTrue(mainPage.isSettingsButtonDisplayed(), "Settings button on the main page is missing");
         softAssert.assertTrue(mainPage.isAccountIconDisplayed(), "Account icon on the main page is missing");
         softAssert.assertAll();
+
     }
 
-    @Step("Testing logout from current account")
-    @Test(groups = "logout")
+    @Test
     @Description("SHOULD FAIL, INCORRECT DATA")
-    @AllureId("2L")
+    @TmsLink("2L")
     @Severity(NORMAL)
     public void testLogout() {
         MainPage mainPage = openStartPage()

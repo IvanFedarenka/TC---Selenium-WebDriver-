@@ -6,20 +6,7 @@
     </listeners>
     <test name="Log In">
         <classes>
-            <class name="tests.LoginTest">
-                <methods>
-                    <include name="testLogin"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Log Out">
-        <classes>
-            <class name="tests.LoginTest">
-                <methods>
-                    <include name="testLogout"/>
-                </methods>
-            </class>
+            <class name="tests.LoginTest"/>
         </classes>
     </test>
 </suite>

@@ -25,7 +25,7 @@ public class DriverRunner {
 
     public WebDriver getDriver() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/webDriver/chromedriver.exe");
-        this.driver = new ChromeDriver();
+        driver = new ChromeDriver();
         log.info("Web driver instance created");
 
         driver.manage().window().maximize();
@@ -33,7 +33,15 @@ public class DriverRunner {
         return driver;
     }
 
+    public WebDriver getDriverInstance() {
+        return driver;
+    }
+
     public void close() {
+        driver.close();
+    }
+
+    public void quitDriver() {
         driver.quit();
     }
 }

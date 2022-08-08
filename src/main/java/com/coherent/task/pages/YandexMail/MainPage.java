@@ -1,6 +1,7 @@
 package com.coherent.task.pages.YandexMail;
 
 import com.coherent.task.pages.BasePage;
+import com.coherent.task.utils.logger.AllureLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,21 +15,28 @@ public class MainPage extends BasePage {
     private static final By ACCOUNT_NAME = By.cssSelector("span.user-account__name");
     private static final By ACCOUNT_ICON = By.xpath("//div[@class='user-pic user-pic_has-plus_ user-account__pic']/img[@class='user-pic__image']");
     private static final By LOG_OUT = By.cssSelector("a[aria-label='Log out']");
+    private AllureLogger log = new AllureLogger();
 
     public MainPage(WebDriver driver) {
         super(driver);
     }
 
     public boolean isAccountNameDisplayed() {
-        return driver.findElement(ACCOUNT_NAME).isDisplayed();
+        boolean isNameVisible = driver.findElement(ACCOUNT_NAME).isDisplayed();
+        log.info("Checking visability of Accont name");
+        return isNameVisible;
     }
 
     public boolean isAccountIconDisplayed() {
-        return driver.findElement(ACCOUNT_ICON).isDisplayed();
+        boolean isIcoVisible = driver.findElement(ACCOUNT_ICON).isDisplayed();
+        log.info("Checking visability of Accont icon");
+        return isIcoVisible;
     }
 
     public boolean isSettingsButtonDisplayed() {
-        return driver.findElement(SETTINGS_BUTTON).isDisplayed();
+        boolean isButtonVisible = driver.findElement(SETTINGS_BUTTON).isDisplayed();
+        log.info("Checking visability of settings button");
+        return isButtonVisible;
     }
 
     public MainPage clickAccountName() {
