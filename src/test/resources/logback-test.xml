@@ -1,0 +1,9 @@
+<configuration debug="true">
+
+    <appender name="ALLURE" class="com.coherent.finalTask.utils.appender.AllureAppender">
+        <prefix>test</prefix>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="ALLURE"/>
+    </root>
+</configuration>
