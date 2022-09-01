@@ -4,6 +4,7 @@ import com.coherent.finalTask.DataObjects.NewUser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static java.lang.String.*;
 import static org.openqa.selenium.By.*;
 
 public class RegistrationPage extends BasePage {
@@ -22,6 +23,7 @@ public class RegistrationPage extends BasePage {
     private static final By SELECT_STATE = cssSelector("select#id_state");
     private static final By PAGE_HEADER = xpath("//h1[text()='Create an account']");
     private static final By SUBMIT = cssSelector("button#submitAccount");
+    private static final String STATE = "//option[text() = '%s']";
 
     public RegistrationPage(WebDriver driver) {
         super(driver);
@@ -61,7 +63,7 @@ public class RegistrationPage extends BasePage {
 
     public RegistrationPage selectState(String str) {
         driver.findElement(SELECT_STATE).click();
-        driver.findElement(xpath("//option[text() = '" + str + "']")).click();
+        driver.findElement(xpath(format(STATE, str))).click();
         return this;
     }
 

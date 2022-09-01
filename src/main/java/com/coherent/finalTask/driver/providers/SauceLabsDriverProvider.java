@@ -1,7 +1,5 @@
 package com.coherent.finalTask.driver.providers;
 
-import com.coherent.finalTask.driver.configurations.Browser;
-import com.coherent.finalTask.driver.configurations.Platform;
 import lombok.SneakyThrows;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,44 +12,43 @@ import java.util.Map;
 
 import static com.coherent.finalTask.utils.properties.PropertiesStorage.SAUCE_LABS_SERVER_URL;
 
-public class SauceLabsDriverProvider extends BaseDriverProvider {
+public class SauceLabsDriverProvider {
 
-    public WebDriver getDriver(Browser name, Platform platform) {
+    public WebDriver getDriver(String name) {
         return switch (name) {
-            case CHROME -> createChromeDriver(platform);
-            case FIREFOX -> createGeckoDriver(platform);
+            case "chrome" -> createChromeDriver();
+            case "firefox" -> createGeckoDriver();
+            default -> throw new IllegalArgumentException();
         };
     }
 
     @SneakyThrows
-    private WebDriver createChromeDriver(Platform platform) {
+    private WebDriver createChromeDriver() {
         ChromeOptions chromeOptions = new ChromeOptions();
         Map<String, Object> sauceOptions = new HashMap<>();
-        sauceOptions.put("build", "<OS - " + platform.getValue() + ">");
+        sauceOptions.put("build", "<OS - Windows 10>");
         sauceOptions.put("name", "<Browser - " + chromeOptions.getBrowserName() + ">");
 
         chromeOptions.setBrowserVersion("latest")
-                .setPlatformName(platform.getValue())
+                .setPlatformName("Windows 10")
                 .setCapability("sauce:options", sauceOptions);
 
         URL sauceUrl = new URL(SAUCE_LABS_SERVER_URL);
-        threadLocal.set(new RemoteWebDriver(sauceUrl, chromeOptions));
-        return threadLocal.get();
+        return new RemoteWebDriver(sauceUrl, chromeOptions);
     }
 
     @SneakyThrows
-    private WebDriver createGeckoDriver(Platform platform) {
+    private WebDriver createGeckoDriver() {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         Map<String, Object> sauceOptions = new HashMap<>();
-        sauceOptions.put("build", "<OS - " + platform.getValue() + ">");
+        sauceOptions.put("build", "<OS - Windows 10>");
         sauceOptions.put("name", "<Browser - " + firefoxOptions.getBrowserName() + ">");
 
         firefoxOptions.setBrowserVersion("latest")
-                .setPlatformName(platform.getValue())
+                .setPlatformName("Windows 10")
                 .setCapability("sauce:options", sauceOptions);
 
         URL sauceUrl = new URL(SAUCE_LABS_SERVER_URL);
-        threadLocal.set(new RemoteWebDriver(sauceUrl, firefoxOptions));
-        return threadLocal.get();
+        return new RemoteWebDriver(sauceUrl, firefoxOptions);
     }
 }

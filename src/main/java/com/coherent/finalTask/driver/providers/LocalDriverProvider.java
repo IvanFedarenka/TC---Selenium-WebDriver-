@@ -1,32 +1,26 @@
 package com.coherent.finalTask.driver.providers;
 
-import com.coherent.finalTask.driver.configurations.Browser;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+
+import static io.github.bonigarcia.wdm.WebDriverManager.*;
 
 @Slf4j
-public class LocalDriverProvider extends BaseDriverProvider {
+public class LocalDriverProvider {
 
-    public WebDriver getDriver(Browser name) {
+    public WebDriver getDriver(String name) {
         return switch (name) {
-            case CHROME -> setChrome();
-            case FIREFOX -> setFirefox();
+            case "chrome" -> setChrome();
+            case "firefox" -> setFirefox();
+            default -> throw new IllegalArgumentException();
         };
     }
 
     private WebDriver setChrome() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/webDriver/chromedriver.exe");
-        threadLocal.set(new ChromeDriver());
-        log.info("Chrome driver instance created");
-        return threadLocal.get();
+        return chromedriver().create();
     }
 
     private WebDriver setFirefox() {
-        System.setProperty("webdriver.gecko.driver", "src/main/resources/webDriver/geckodriver.exe");
-        threadLocal.set(new FirefoxDriver());
-        log.info("Firefox driver instance created");
-        return threadLocal.get();
+        return firefoxdriver().create();
     }
 }

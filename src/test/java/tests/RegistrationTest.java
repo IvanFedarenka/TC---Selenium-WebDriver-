@@ -1,5 +1,6 @@
 package tests;
 
+import ch.qos.logback.classic.Logger;
 import com.coherent.finalTask.DataObjects.NewUser;
 import com.coherent.finalTask.pages.MyAccountPage;
 import com.coherent.finalTask.pages.RegistrationPage;
@@ -7,7 +8,7 @@ import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -17,12 +18,11 @@ import java.io.FileReader;
 import static com.coherent.finalTask.utils.properties.PropertiesStorage.EXPECTED_TITLE;
 import static com.coherent.finalTask.utils.properties.PropertiesStorage.FAKE_USER_DATA;
 import static io.qameta.allure.SeverityLevel.*;
-import static java.time.Duration.*;
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 import static org.testng.Assert.*;
 
 public class RegistrationTest extends BaseTest {
 
+    private Logger log = (Logger) LoggerFactory.getLogger(RegistrationTest.class);
     private String randomEmail;
     private NewUser newUser;
 
@@ -55,7 +55,7 @@ public class RegistrationTest extends BaseTest {
                 .submitRegistration();
         log.info("Sent valid data");
 
-        new WebDriverWait(driver, ofSeconds(15)).until(titleIs(EXPECTED_TITLE));
+        accountPage.waitTitle(15, EXPECTED_TITLE);
         assertEquals(driver.getTitle(), EXPECTED_TITLE, "Account page title doesn't matches with expected");
         assertTrue(accountPage.isWishlistDisplayed(), "Wishlist is missing on the Account page after registration");
     }

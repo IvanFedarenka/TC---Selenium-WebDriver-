@@ -8,7 +8,6 @@ import static org.openqa.selenium.By.*;
 public class MyAccountPage extends BasePage {
 
     private static final By WISHLIST_BUTTON = xpath("//span[text()='My wishlists']");
-    private static final By PERSONAL_INFO_BUTTON = xpath("My personal information");
     private static final By TO_WOMEN_LINK = xpath("//a[text()='Women']");
 
     public MyAccountPage(WebDriver driver) {
@@ -17,10 +16,6 @@ public class MyAccountPage extends BasePage {
 
     public boolean isWishlistDisplayed() {
         return waitVisibilityOf(15, driver.findElement(WISHLIST_BUTTON)).isDisplayed();
-    }
-
-    public boolean isPersonalInfoDisplayed() {
-        return waitVisibilityOf(15, driver.findElement(PERSONAL_INFO_BUTTON)).isDisplayed();
     }
 
     public WishlistsPage goToWishlist() {

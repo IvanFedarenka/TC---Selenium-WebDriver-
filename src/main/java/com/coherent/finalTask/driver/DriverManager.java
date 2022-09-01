@@ -1,8 +1,5 @@
 package com.coherent.finalTask.driver;
 
-import com.coherent.finalTask.driver.configurations.Browser;
-import com.coherent.finalTask.driver.configurations.Environment;
-import com.coherent.finalTask.driver.configurations.Platform;
 import com.coherent.finalTask.driver.providers.DockerDriverProvider;
 import com.coherent.finalTask.driver.providers.GridDriverProvider;
 import com.coherent.finalTask.driver.providers.LocalDriverProvider;
@@ -14,14 +11,17 @@ import static java.time.Duration.ofSeconds;
 public class DriverManager {
 
     private WebDriver driver;
+    private static ThreadLocal<WebDriver> threadLocal = new ThreadLocal<>();
 
-    public WebDriver selectDriver(Environment environment, Browser browserName, Platform platform) {
+    public WebDriver getDriver(String environment, String browserName) {
+
         switch (environment) {
-            case LOCAL -> driver = new LocalDriverProvider().getDriver(browserName);
-            case SELENIUM_GRID -> driver = new GridDriverProvider().getDriver(browserName);
-            case SAUCE_LABS -> driver = new SauceLabsDriverProvider().getDriver(browserName, platform);
-            case DOCKER -> driver = new DockerDriverProvider().getDriver(browserName);
+            case "local" -> threadLocal.set(new LocalDriverProvider().getDriver(browserName));
+            case "grid" -> threadLocal.set(new GridDriverProvider().getDriver(browserName));
+            case "sauceLabs" -> threadLocal.set(new SauceLabsDriverProvider().getDriver(browserName));
+            case "docker" -> threadLocal.set(new DockerDriverProvider().getDriver(browserName));
         }
+        driver = threadLocal.get();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(ofSeconds(30));
         driver.manage().timeouts().pageLoadTimeout(ofSeconds(30));

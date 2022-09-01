@@ -1,9 +1,11 @@
 package tests;
 
+import ch.qos.logback.classic.Logger;
 import com.coherent.finalTask.pages.CartPage;
 import com.coherent.finalTask.pages.CatalogPage;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -15,6 +17,8 @@ import static org.testng.Assert.*;
 
 public class CartTest extends BaseTest {
 
+    private Logger log = (Logger) LoggerFactory.getLogger(CartTest.class);
+
     @Test
     @Description("Testing add to cart functional with 3 products")
     @Severity(NORMAL)
@@ -24,8 +28,7 @@ public class CartTest extends BaseTest {
                 .clickSignInButton().goToCatalog();
         log.info("Entered account");
 
-        catalogPage.addFirstThreeGoodsInCart();
-        List<String> productNames = catalogPage.getNames();
+        List<String> productNames = catalogPage.getFirstThreeGoodsInCart();
         double total = catalogPage.getTotalPrice();
         log.info("Products added to the cart. Total price expected: " + total);
         CartPage cartPage = catalogPage.goToCart();

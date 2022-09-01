@@ -14,4 +14,7 @@ public class PropertiesStorage {
     public static final String FAKE_USER_DATA = getProperty("fake.user.data");
     public static final String HUB_URL = getProperty("hub.url");
     public static final String WISHLIST_URL = getProperty("wishlist.url");
+
+    public static final String ENVIRONMENT = System.getProperty("environment", "local");
+    public static final String BROWSER_NAME = System.getProperty("browserName", "firefox");
 }

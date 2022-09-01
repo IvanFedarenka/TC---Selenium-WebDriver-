@@ -12,7 +12,7 @@ import static org.openqa.selenium.By.*;
 public class WishlistsPage extends BasePage {
 
     private static final By WISHLISTS = xpath("//div[@id='block-history']//tbody/tr");
-    private static final By FIRST_PRODUCT_IN_RECOMMENDED = xpath("//div[@class='block_content']/ul/li[1]/a");
+    private static final By FIRST_PRODUCT_IN_RECOMMENDED = xpath("//li[@class='clearfix']/a");
     private static final By FIRST_WISHLIST = xpath("//div[@id='block-history']//tbody/tr/td[1]/a");
     private static final By WISH_PRODUCT_TITLE = xpath("//div[@class='product_infos']/p[@id='s_title']");
     private static final By DELETE_WISHLIST_BUTTON = xpath("//tr/td[last()]/a");

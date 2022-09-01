@@ -2,10 +2,10 @@ package com.coherent.finalTask.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
+import static java.time.Duration.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class BasePage {
 
@@ -16,7 +16,11 @@ public class BasePage {
     }
 
     protected WebElement waitVisibilityOf(int seconds, WebElement element) {
-        new WebDriverWait(driver, Duration.ofSeconds(seconds)).until(ExpectedConditions.visibilityOf(element));
+        new WebDriverWait(driver, ofSeconds(seconds)).until(visibilityOf(element));
         return element;
+    }
+
+    public void waitTitle(int seconds, String title) {
+        new WebDriverWait(driver, ofSeconds(seconds)).until(titleIs(title));
     }
 }

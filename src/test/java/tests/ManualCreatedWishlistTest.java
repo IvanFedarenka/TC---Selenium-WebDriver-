@@ -1,10 +1,13 @@
 package tests;
 
+import ch.qos.logback.classic.Logger;
 import com.coherent.finalTask.pages.MyAccountPage;
 import com.coherent.finalTask.pages.ProductPage;
 import com.coherent.finalTask.pages.WishlistsPage;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
@@ -17,6 +20,7 @@ import static org.testng.Assert.assertTrue;
 public class ManualCreatedWishlistTest extends BaseTest {
 
     private final String wishlistName = "My new List";
+    private Logger log = (Logger) LoggerFactory.getLogger(ManualCreatedWishlistTest.class);
 
     @Test
     @Description("Testing manual wishlist creating")

@@ -4,10 +4,12 @@ import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Double.*;
+import static java.lang.String.*;
 import static org.openqa.selenium.By.*;
 
 public class CatalogPage extends BasePage {
@@ -16,7 +18,10 @@ public class CatalogPage extends BasePage {
     private static final By PRODUCT = cssSelector("li.ajax_block_product");
     private static final By CART = xpath("//a[@title='View my shopping cart']");
     private static final By PRODUCT_NAME = cssSelector("a.product-name");
-    private List<String> names = new ArrayList<>();
+    private static final By SWITCHER = cssSelector("i.icon-th-list");
+    private static final String PRICE = "//a[@title='%s']/../../following-sibling::div//span[@itemprop='price']";
+    private static final String ADD_BUTTON = "//a[@title='%s']/../../following-sibling::div//a[@title='Add to cart']";
+
     private double totalPrice;
 
     public CatalogPage(WebDriver driver) {
@@ -24,29 +29,25 @@ public class CatalogPage extends BasePage {
     }
 
     @SneakyThrows
-    public CatalogPage addFirstThreeGoodsInCart() {
+    public List<String> getFirstThreeGoodsInCart() {
         List<WebElement> products = driver.findElements(PRODUCT).stream().limit(3).toList();
-
+        List<String> names = new ArrayList<>();
         for (WebElement product : products) {
-            driver.findElement(By.cssSelector("i.icon-th-list")).click();
+            driver.findElement(SWITCHER).click();
 
             String productName = product.findElement(PRODUCT_NAME).getText();
             names.add(productName);
-            totalPrice += parseDouble(driver.findElement(xpath("//a[@title='" + productName + "']/../../following-sibling::div//span[@itemprop='price']")).getText().replace('$', ' ').trim());
-            driver.findElement(xpath("//a[@title='" + productName + "']/../../following-sibling::div//a[@title='Add to cart']")).click();
+            totalPrice += parseDouble(driver.findElement(xpath(format(PRICE, productName))).getText().replace('$', ' ').trim());
+            driver.findElement(xpath(format(ADD_BUTTON, productName))).click();
 
             waitVisibilityOf(10, driver.findElement(CONTINUE_BUTTON)).click();
         }
-        return this;
+        return names;
     }
 
     public CartPage goToCart() {
         driver.findElement(CART).click();
         return new CartPage(driver);
-    }
-
-    public List<String> getNames() {
-        return names;
     }
 
     public double getTotalPrice() {
