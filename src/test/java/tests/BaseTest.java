@@ -8,37 +8,35 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static com.coherent.finalTask.config.SetSystemProperties.*;
+import static com.coherent.finalTask.driver.DriverManager.*;
 import static com.coherent.finalTask.utils.properties.PropertiesStorage.*;
+import static java.time.Duration.ofSeconds;
 
 @Slf4j
 public class BaseTest {
 
     protected WebDriver driver;
-    private DriverManager driverManager = new DriverManager();
+    private DriverManager driverManager = getInstance();
 
     @BeforeClass
     public void setDriver() {
         this.driver = driverManager.getDriver();
         log.info("Driver instance created, test started");
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(ofSeconds(30));
+        driver.manage().timeouts().pageLoadTimeout(ofSeconds(30));
     }
 
     @AfterClass
     public void tearDown() {
-        driver.quit();
+        driverManager.tearDown();
         log.info("Current driver instance closed.");
         attachEnvironment(driver);
-    }
-
-    @BeforeSuite
-    public void setProps() {
-        setProperties();
     }
 
     protected LoginPage openLoginPage() {

@@ -3,37 +3,44 @@ package com.coherent.finalTask.driver;
 import com.coherent.finalTask.driver.providers.*;
 import org.openqa.selenium.WebDriver;
 
-import static java.time.Duration.ofSeconds;
+import static com.coherent.finalTask.utils.properties.PropertiesStorage.ENVIRONMENT;
 
 public class DriverManager {
 
-    private IDriverProvider driverProvider;
-    private WebDriver driver;
-    private static ThreadLocal<WebDriver> threadLocal = new ThreadLocal<>();
+    private ThreadLocal<WebDriver> threadLocal = new ThreadLocal<>();
+    private static volatile DriverManager driverManager;
+
+    private DriverManager() {
+    }
+
+    public static DriverManager getInstance() {
+        DriverManager local = driverManager;
+        if (local == null) {
+            synchronized (DriverManager.class) {
+                local = driverManager;
+                if (local == null) {
+                    driverManager = local = new DriverManager();
+                }
+            }
+        }
+        return local;
+    }
 
     public WebDriver getDriver() {
-
-        switch (System.getProperty("environment")) {
+        IDriverProvider driverProvider;
+        switch (ENVIRONMENT) {
             case "local" -> driverProvider = new LocalDriverProvider();
             case "grid" -> driverProvider = new GridDriverProvider();
             case "sauceLabs" -> driverProvider = new SauceLabsDriverProvider();
             case "docker" -> driverProvider = new DockerDriverProvider();
+            default -> throw new IllegalStateException("Unexpected value: " + ENVIRONMENT);
         }
         threadLocal.set(driverProvider.getDriver());
-        driver = threadLocal.get();
-
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(ofSeconds(30));
-        driver.manage().timeouts().pageLoadTimeout(ofSeconds(30));
-        return driver;
+        return threadLocal.get();
     }
 
     public void tearDown() {
-        driver.quit();
+        threadLocal.get().quit();
         threadLocal.remove();
-        if (driver != null) {
-            driver.close();
-            driver.quit();
-        }
     }
 }
