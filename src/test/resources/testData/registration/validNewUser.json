@@ -1,0 +1,13 @@
+{
+
+    "firstName" : "Nikolay",
+    "lastName": "Smith",
+    "password" : "ItsTheBrandNewPassword",
+    "address" : "Main Street, 115",
+    "city" : "Yellowstone",
+    "state" : "Florida",
+    "postalCode" : "21000",
+    "country" : "United States",
+    "mobilePhone" : "+555-35-8686869"
+
+}

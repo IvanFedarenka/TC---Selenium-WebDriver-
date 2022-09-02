@@ -1,0 +1,6 @@
+-Denvironment=local
+-Denvironment=grid
+-Denvironment=sauceLabs
+-Denvironment=docker
+-DbrowserName=chrome
+-DbrowserName=firefox
