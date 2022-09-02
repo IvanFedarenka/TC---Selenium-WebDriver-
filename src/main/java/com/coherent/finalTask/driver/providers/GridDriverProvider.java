@@ -11,12 +11,12 @@ import java.net.URL;
 import static com.coherent.finalTask.utils.properties.PropertiesStorage.HUB_URL;
 
 @Slf4j
-public class GridDriverProvider {
+public class GridDriverProvider implements IDriverProvider {
 
     @SneakyThrows
-    public WebDriver getDriver(String browser) {
+    public WebDriver getDriver() {
         DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setBrowserName(browser);
+        caps.setBrowserName(System.getProperty("browserName"));
         return new RemoteWebDriver(new URL(HUB_URL), caps);
     }
 }

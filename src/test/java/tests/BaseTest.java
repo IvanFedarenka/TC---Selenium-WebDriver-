@@ -25,7 +25,7 @@ public class BaseTest {
 
     @BeforeClass
     public void setDriver() {
-        this.driver = driverManager.getDriver(ENVIRONMENT, BROWSER_NAME);
+        this.driver = driverManager.getDriver();
         log.info("Driver instance created, test started");
     }
 

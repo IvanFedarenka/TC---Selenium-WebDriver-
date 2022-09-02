@@ -6,10 +6,10 @@ import org.openqa.selenium.WebDriver;
 import static io.github.bonigarcia.wdm.WebDriverManager.*;
 
 @Slf4j
-public class LocalDriverProvider {
+public class LocalDriverProvider implements IDriverProvider {
 
-    public WebDriver getDriver(String name) {
-        return switch (name) {
+    public WebDriver getDriver() {
+        return switch (System.getProperty("browserName")) {
             case "chrome" -> setChrome();
             case "firefox" -> setFirefox();
             default -> throw new IllegalArgumentException();

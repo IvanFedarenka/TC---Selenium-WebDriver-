@@ -12,10 +12,10 @@ import java.util.Map;
 
 import static com.coherent.finalTask.utils.properties.PropertiesStorage.SAUCE_LABS_SERVER_URL;
 
-public class SauceLabsDriverProvider {
+public class SauceLabsDriverProvider implements IDriverProvider {
 
-    public WebDriver getDriver(String name) {
-        return switch (name) {
+    public WebDriver getDriver() {
+        return switch (System.getProperty("browserName")) {
             case "chrome" -> createChromeDriver();
             case "firefox" -> createGeckoDriver();
             default -> throw new IllegalArgumentException();

@@ -6,7 +6,6 @@ import com.coherent.finalTask.pages.ProductPage;
 import com.coherent.finalTask.pages.WishlistsPage;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
